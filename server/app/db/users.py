@@ -1,4 +1,4 @@
-from db.connection import get_connection
+from db.async_connections import get_connection
 from passlib.context import CryptContext
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")

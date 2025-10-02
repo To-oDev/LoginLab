@@ -1,5 +1,4 @@
 # Configuración de conexión asíncrona
-import os
 import asyncpg
 from contextlib import asynccontextmanager
 
