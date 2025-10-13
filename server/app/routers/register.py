@@ -25,16 +25,13 @@ class RegisterResponse(BaseModel):
 # -------------------------
 @router.post("/register", response_model=RegisterResponse)
 async def register(request: RegisterRequest):
-    # Obtenemos la conexión de manera segura
-    async with get_connection() as conn:
-        # Validar que el usuario aceptó los términos
-        if not request.accept_terms:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Debes aceptar los términos y condiciones"
-            )
+    # Validar que el usuario aceptó los términos
+    if not request.accept_terms:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Debes aceptar los términos y condiciones"
+        )
 
-        # Crear usuario
-        user = await create_user(request.username, request.email, request.password, conn)
-        print("User:", user)
+    # Crear usuario
+    user = await create_user(request.username, request.email, request.password)
     return RegisterResponse(id=user["id"], username=user["username"], email=user["email"])

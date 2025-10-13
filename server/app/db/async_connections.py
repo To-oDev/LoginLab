@@ -16,7 +16,7 @@ async def close_db_pool():
         await pool.close()
         print("Pool de conexiones cerrado.")
 
-# Context manager para obtener una conexión
+# Context manager para obtener una conexión de manera segura
 from contextlib import asynccontextmanager
 
 @asynccontextmanager

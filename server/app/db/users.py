@@ -1,11 +1,11 @@
 from fastapi import HTTPException, status
-from passlib.context import CryptContext
 from uuid import UUID
+from passlib.hash import pbkdf2_sha256
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+from app.db.async_connections import get_connection
 
-async def create_user(username: str, email: str, password: str, conn):
-    user = await get_user_by_username(username, conn)
+async def create_user(username: str, email: str, password: str):
+    user = await get_user_by_username(username)
     if user:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -18,16 +18,25 @@ async def create_user(username: str, email: str, password: str, conn):
         VALUES ($1, $2, $3)
         RETURNING id, username, email
     """
-    row = await conn.fetchrow(query, username, email, password)
-    return row
+    async with get_connection() as conn:
+        row = await conn.fetchrow(query, username, email, pbkdf2_sha256.hash(password))
+        return row
 
-async def delete_user(user_id: UUID, conn):
-    user = await get_user_by_username(user_id, conn)
-    if not user:
-        raise HTTPException(status_code=404, detail="User not found")
-    return await conn.fetchrow("DELETE FROM users WHERE id = $1", str(user_id))
+async def delete_user_by_username(user_name: str):
+    async with get_connection() as conn:
+        user = await get_user_by_username(user_name)
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+        return await conn.fetchrow("DELETE FROM users WHERE id = $1", user_name)
 
-async def get_user_by_username(username: str, conn):
-    query = "SELECT * FROM users WHERE username = $1"
-    row = await conn.fetchrow(query, username)
-    return row
+async def get_user_by_username(username: str):
+    async with get_connection() as conn:
+        query = "SELECT * FROM users WHERE username = $1"
+        row = await conn.fetchrow(query, username)
+        return row
+
+async def get_users():
+    async with get_connection() as conn:
+        query = "SELECT * FROM users"
+        rows = await conn.fetch(query)
+        return rows
