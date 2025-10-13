@@ -37,8 +37,8 @@ async def login(request: LoginRequest):
         )
         access_token_expires = timedelta(minutes=expire_minutes)
         access_token = await create_access_token(user["id"], access_token_expires)
-        token = access_token
+        return Token(access_token=access_token, token_type="bearer")
 
-    return {"access_token": token, "token_type": "bearer"}
+    return Token(access_token=token["token"], token_type="bearer")
 
 
