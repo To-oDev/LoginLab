@@ -17,6 +17,25 @@ const LoginRegister = () => {
     const handleLoginRequest = (e) => {
         e.preventDefault();
         console.log('Login', e);
+        fetch("http://localhost:8000/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                "username": e.target.elements.user.value,
+                "password": e.target.elements.password.value,
+                "remember_me": e.target.elements.rememberme.value
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+            if (data.access_token) {
+                localStorage.setItem("token", data.access_token);
+                window.location.href = "/"; // Redirigir a la página deseada
+            }
+        });
     }
 
     return (
@@ -34,7 +53,7 @@ const LoginRegister = () => {
                     </div>
 
                     <div className="remember-forgot">
-                        <label><input name="remember" type="checkbox"/>Remember me</label>
+                        <label><input name="rememberme" type="checkbox"/>Remember me</label>
                         <a href="#">Forgot Password</a>
                     </div>
 

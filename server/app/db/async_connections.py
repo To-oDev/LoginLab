@@ -1,33 +1,27 @@
-# Configuración de conexión asíncrona
 import asyncpg
-from contextlib import asynccontextmanager
 
-# Configuración de conexión vía variable de entorno
-DATABASE_URL = "postgresql://postgres:1234@localhost:5432/person_gpt"
+DATABASE_URL = "postgresql://postgres:1234@localhost:5432/login_lab"
 
-# Crear pool de conexiones
-pool: asyncpg.pool.Pool | None = None
+pool = None  # variable global del pool
 
-# Función asíncrona para crear el pool
 async def init_db_pool():
     global pool
-    pool = await asyncpg.create_pool(
-        dsn=DATABASE_URL,
-        min_size=1,
-        max_size=20
-    )
-    print("✅ Async pool creado")
+    if pool is None:
+        pool = await asyncpg.create_pool(DATABASE_URL)
+        print("Pool de conexiones inicializado.")
 
-# Función asiatcrona para cerrar el pool
 async def close_db_pool():
     global pool
     if pool:
         await pool.close()
-        print("✅ Pool cerrado")
+        print("Pool de conexiones cerrado.")
 
-# Context manager para usar la conexión de manera segura
+# Context manager para obtener una conexión de manera segura
+from contextlib import asynccontextmanager
+
 @asynccontextmanager
 async def get_connection():
+    global pool
     if pool is None:
         raise RuntimeError("El pool no está inicializado")
     async with pool.acquire() as conn:
