@@ -149,23 +149,20 @@ uvicorn app.main:app --reload
 # client>
 npm start
 ```
-Abre el frontend en tu navegador y empieza a experimentar.  
+Abre el frontend en tu navegador e "inicia sesión". Tu token de sesión será almacenado (por ahora) en local storage.
+
+> Es recomendable no guardar tokens de sesión en local storage. En su lugar utiliza Secure Cookies.
 
 - Intenta iniciar sesión (no uses cuentas de Google).
 
-Estudiantes que quieran aprender los fundamentos de autenticación.
-
-Desarrolladores que necesiten un sandbox para probar ideas rápidas.
-
-Cualquiera que quiera experimentar con login sin miedo a equivocarse.
+- Aprender los fundamentos de autenticación.
+- Desarrollar un sandbox para probar ideas rápidas.
+- Experimentar con login.
 
 ## ⚠️ Importante
 
-No usar en producción: este proyecto es educativo.
+No usar en producción: este proyecto es explorativo.
 
-Las contraseñas no están encriptadas por defecto (parte del reto es implementarlo).
-
-La seguridad aquí es básica: el propósito es aprender los cimientos.
-
-## 👨‍💻 Crea, rompe y vuelve a armar.
-Ese es el espíritu de este laboratorio.
+## 🖥️ Vista previa
+![Vista previa](preview/preview.png)
+![Vista previa](preview/preview_2.png)
