@@ -1,14 +1,14 @@
 # 🧪 Login Lab
 
-**Login Lab** es un entorno de práctica para explorar cómo funcionan los sistemas de inicio de sesión en aplicaciones web.  
-No es un producto final, sino un **playground de autenticación**: un espacio seguro para aprender, probar y romper sin consecuencias.  
+**Login Lab** es un entorno fullstack de práctica para explorar cómo funcionan los sistemas de inicio de sesión en aplicaciones web.  
+No es un producto final, sino un **playground de autenticación**: un espacio seguro para experimentar.  
 
 ---
 
 ## 🎯 Objetivo
 - Comprender los conceptos básicos de **login y autenticación**.  
 - Practicar el manejo de sesiones, cookies y tokens.  
-- Experimentar con opciones como **“Remember me”** y **aceptación de términos**.  
+- Experimentar con opciones como **“Remember me”** y **Aceptación de términos**.  
 - Servir como base para integrar funciones más avanzadas (registro, roles, OAuth, etc.).  
 
 ---
@@ -59,23 +59,20 @@ uvicorn app.main:app --reload
 # client>
 npm run dev
 ```
-Abre el frontend en tu navegador y empieza a experimentar.  
+Abre el frontend en tu navegador e "inicia sesión". Tu token de sesión será almacenado (por ahora) en local storage.
+
+> Es recomendable no guardar tokens de sesión en local storage. En su lugar utiliza Secure Cookies.
 
 ## 🛠️ Ideal para
 
-Estudiantes que quieran aprender los fundamentos de autenticación.
-
-Desarrolladores que necesiten un sandbox para probar ideas rápidas.
-
-Cualquiera que quiera experimentar con login sin miedo a equivocarse.
+- Aprender los fundamentos de autenticación.
+- Desarrollar un sandbox para probar ideas rápidas.
+- Experimentar con login.
 
 ## ⚠️ Importante
 
-No usar en producción: este proyecto es educativo.
+No usar en producción: este proyecto es explorativo.
 
-Las contraseñas no están encriptadas por defecto (parte del reto es implementarlo).
-
-La seguridad aquí es básica: el propósito es aprender los cimientos.
-
-## 👨‍💻 Crea, rompe y vuelve a armar.
-Ese es el espíritu de este laboratorio.
+## 🖥️ Vista previa
+![Vista previa](preview/preview.png)
+![Vista previa](preview/preview_2.png)
